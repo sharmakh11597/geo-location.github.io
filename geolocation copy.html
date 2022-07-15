@@ -1,0 +1,30 @@
+<html><head><title>Send Geo to Whatsapp</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<p align=center>Please allow location access<br>
+This will active once only
+</p>
+<script>
+if (navigator.geolocation) {
+	var geooptions = {enableHighAccuracy: false};
+	navigator.geolocation.getCurrentPosition(showPosition,function(){},geooptions);
+}
+function showPosition(position) {
+	loctext="Latitude: " + position.coords.latitude + "\nLongitude: " + position.coords.longitude;
+
+	//You can use Javascript builtin encryption mechanism to encrypt the text with RSA public key
+	// https://developer.mozilla.org/en-US/docs/Web/API/SubtleCrypto/encrypt
+	// window.btoa function can be used to convert binary data to Base64 text format
+
+	/*You can send the location coordinate to webserver using XML HTTP Request:
+	var httpreq= new XMLHttpRequest();
+	httpreq.open("POST","https://crm.company.com/whatapplocation.jsp?customersessionid=sdjahdjkfh",false);
+	httpreq.send(loctext);
+	*/
+
+	//Or simply put location coordinate in Whatsapp mesage when redirecting user back to Business Whatsapp chat
+	location.replace("https://api.whatsapp.com/send?phone=919851351142&text="+encodeURIComponent(loctext+"\nPlease send this message"));
+}
+</script>
+</body></html>
